@@ -64,20 +64,16 @@ func (w GkrWire) IsOutput() bool {
 func (d *GkrInfo) AssignmentOffsets() []int {
 	c := d.Circuit
 	res := make([]int, len(c)+1) // One extra element for easier boundary calculations.
-	
 	for i := range c {
 		nbExplicitAssignments := 0
-		
 		// If the wire is an independent input
 		if c[i].IsInput() {
 			// Determine the number of non-dependent instances
 			nbExplicitAssignments = d.NbInstances - len(c[i].Dependencies)
 		}
-
 		// Compute the offset by adding to the previous index
 		res[i+1] = res[i] + nbExplicitAssignments
 	}
-	
 	return res
 }
 
